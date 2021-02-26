@@ -13,10 +13,18 @@
                     <input 
                         type="text"
                         name="titulo" 
-                        class="form-control"
+                        class="form-control @error('titulo') is-invalid @enderror"
                         id="titulo"
                         placeholder="Titulo Receta"
+                        value="{{ old('titulo') }}"
                     />
+
+                    @error('titulo')
+                        <span class="invalid-feedback d-block" role="alert">
+                            <strong>{{$message}}</strong>
+                        </span>
+                    @enderror
+
                 </div>
                 <div class="form-cotrol">
                     <input type="submit" class="btn btn-primary" value="Agregar Receta">

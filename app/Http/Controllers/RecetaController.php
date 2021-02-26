@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class RecetaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -36,11 +41,15 @@ class RecetaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request();
+        $data = request()->validate([
+            'titulo' => 'required | min:3'
+        ]);
+
         DB::table('recetas')->insert([
             'titulo' => $data['titulo']
         ]);
-        dd($request->all());
+        //dd($request->all());
+        return redirect('/recetas');
     }
 
     /**
