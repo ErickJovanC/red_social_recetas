@@ -6,6 +6,7 @@ use App\Models\Receta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class RecetaController extends Controller
 {
@@ -44,6 +45,7 @@ class RecetaController extends Controller
      */
     public function store(Request $request)
     {
+        // Validación
         $data = request()->validate([
             'titulo' => 'required | min:6',
             'preparacion' => 'required',
@@ -52,11 +54,22 @@ class RecetaController extends Controller
             'categoria' => 'required',
         ]);
 
+        // Obtención de la ruta de la imagen
+        // La imagen deberá ir despues de la validación para evitar que no sea reconocida
+        $rutaImagen = $request['imagen']->store('upload-receta', 'public');
+        // La variable en realidad ejecuta la instrucción y alamacena la ruta de la imagen dentro del servidor
+
+        // Redimencionado de la imagen con Intervention/image
+        $img = Image::make( public_path("storage/{$rutaImagen}"))-> fit(1000, 550);
+        $img->save();
+        // Este cambio lo hace con la imagen en el propio servidor
+
+        // Almacenar en la BD (Sin modelo)
         DB::table('recetas')->insert([
             'titulo' => $data['titulo'],
             'preparacion' => $data['preparacion'],
             'ingredientes' => $data['ingredientes'],
-            'imagen' => 'imagen.jpg',
+            'imagen' => $rutaImagen,
             'user_id' => Auth::user()->id,
             'categoria_id' => $data['categoria']
         ]);

@@ -13,7 +13,7 @@
     <h2 class="text-center mb-5">Crear Recetas</h2>
     <div class="row justify-content-center mt-5">
         <div class="col-md-5">
-            <form action="{{ route('recetas.store') }}" method="post">
+            <form action="{{ route('recetas.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="titulo">Titulo Receta</label>
