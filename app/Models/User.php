@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /** Relación de 1:n de Usuario a Recetas hasMany*/
+    public function recetas(){
+        return $this->hasMany(Receta::class);
+    }
 }

@@ -22,7 +22,9 @@ class RecetaController extends Controller
      */
     public function index()
     {
-        return view('recetas.index');
+        $recetas = Auth::user()->recetas; // Esto trae solo las recetas del usuario
+        //$recetas = DB::table('recetas')->get(); // Esto trae todas la recetas
+        return view('recetas.index')->with('recetas', $recetas);
     }
 
     /**
@@ -33,7 +35,9 @@ class RecetaController extends Controller
     public function create()
     {
         // DB::table('categoria_receta')-> get()->pluck('nombre', 'id') -> dd();
-        $categorias = DB::table('categoria_receta')-> get()->pluck('nombre', 'id');
+
+        // Consulta a la BD de elementos seleccionador pluck()
+        $categorias = DB::table('categoria_recetas')-> get()->pluck('nombre', 'id');
         return view('recetas.create')-> with('categorias', $categorias);
     }
 
