@@ -42,7 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    /** Relación de 1:n de Usuario a Recetas hasMany*/
+    /** Relación de 1:n de Usuario a Recetas hasMany
+     * Esto permitira filtrar las recetas por usurio
+    */
     public function recetas(){
         return $this->hasMany(Receta::class);
     }

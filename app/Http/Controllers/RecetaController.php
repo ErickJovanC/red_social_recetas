@@ -75,15 +75,24 @@ class RecetaController extends Controller
         // Este cambio lo hace con la imagen en el propio servidor
 
         // Almacenar en la BD (Sin modelo)
-        DB::table('recetas')->insert([
-            'titulo' => $data['titulo'],
-            'preparacion' => $data['preparacion'],
-            'ingredientes' => $data['ingredientes'],
-            'imagen' => $rutaImagen,
-            'user_id' => Auth::user()->id,
-            'categoria_id' => $data['categoria']
-        ]);
-        //dd($request->all());
+        // DB::table('recetas')->insert([
+        //     'titulo' => $data['titulo'],
+        //     'preparacion' => $data['preparacion'],
+        //     'ingredientes' => $data['ingredientes'],
+        //     'imagen' => $rutaImagen,
+        //     'user_id' => Auth::user()->id,
+        //     'categoria_id' => $data['categoria']
+        // ]);
+        //dd($request->all()); // visualizar los datos que se registraran
+
+            auth()->user()->recetas()->create([
+                'titulo' => $data['titulo'],
+                'preparacion' => $data['preparacion'],
+                'ingredientes' => $data['ingredientes'],
+                'imagen' => $rutaImagen,
+                'categoria_id' => $data['categoria']
+            ]);
+
         return redirect('/recetas');
     }
 
