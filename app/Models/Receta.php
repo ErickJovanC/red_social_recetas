@@ -19,8 +19,13 @@ class Receta extends Model
     ];
 
     // Se obtiene la categoria por medio del id_categoria
-    // Se usa belongsTo para un relación de muchos a 1
+    // Se usa belongsTo para un relación de muchos a 1 (Muchas recetas tienen una categoria)
     public function categoria(){
         return $this->belongsTo(CategoriaReceta::class);
+    }
+
+    //Obtener la información del autor (user) via FK
+    public function autor(){
+        return $this->belongsTo(User::class, 'user_id'); // FK de esta tabla
     }
 }
