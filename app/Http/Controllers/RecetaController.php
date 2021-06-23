@@ -115,7 +115,8 @@ class RecetaController extends Controller
      */
     public function edit(Receta $receta)
     {
-        //
+        $categorias = CategoriaReceta::all(['id', 'nombre']);
+        return view('recetas.edit', compact('categorias', 'receta'));
     }
 
     /**
@@ -127,7 +128,44 @@ class RecetaController extends Controller
      */
     public function update(Request $request, Receta $receta)
     {
-        //
+        // dd($receta;
+        // dd($request->all());
+        // Validación
+        $data = request()->validate([
+            'titulo' => 'required | min:6',
+            'preparacion' => 'required',
+            'ingredientes' => 'required',
+            // 'imagen' => 'required | image | size:1000',
+            'categoria' => 'required',
+        ]);
+
+        if(request('imagen')){
+            $rutaImagen = $request['imagen']->store('upload-receta', 'public');
+            // La variable en realidad ejecuta la instrucción y alamacena la ruta de la imagen dentro del servidor
+
+            // Redimencionado de la imagen con Intervention/image
+            $img = Image::make( public_path("storage/{$rutaImagen}"))-> fit(1000, 550);
+            $img->save();
+
+            $receta->imagen = $rutaImagen;
+        }
+
+        $receta->update([
+            'titulo' => $data['titulo'],
+            'preparacion' => $data['preparacion'],
+            'ingredientes' => $data['ingredientes'],
+            'imagen' => $rutaImagen,
+            'categoria_id' => $data['categoria']
+        ]);
+
+        // Metodo Alterno
+        // $receta->titulo = $data['titulo'];
+        // Se repite para todas la lineas deseadas y se guarda
+        // $receta->save();
+
+        
+
+        return redirect('recetas/');
     }
 
     /**

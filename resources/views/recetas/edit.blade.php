@@ -10,11 +10,12 @@
     <a href="{{ route('recetas.index') }}" class="btn btn-primary mr-2 text-white">Volver</a>
 @endsection
 @section('content')
-    <h2 class="text-center mb-5">Crear Recetas</h2>
+    <h2 class="text-center mb-5">Editar Receta: {{ $receta->titulo }}</h2>
     <div class="row justify-content-center mt-5">
         <div class="col-md-5">
-            <form action="{{ route('recetas.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('recetas.update', $receta) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('put')
                 <div class="form-group">
                     <label for="titulo">Titulo Receta</label>
                     <input 
@@ -23,7 +24,7 @@
                         class="form-control @error('titulo') is-invalid @enderror"
                         id="titulo"
                         placeholder="Titulo Receta"
-                        value="{{ old('titulo') }}"
+                        value="{{ old('titulo') ? old('titulo') : $receta->titulo }}"
                     />
 
                     @error('titulo')
@@ -44,7 +45,7 @@
                         @foreach ($categorias as $categoria)
                         <option 
                             value="{{ $categoria->id }}"
-                            {{ old('categoria') == $categoria->id ? 'selected' : '' }}
+                            {{ $receta->categoria_id == $categoria->id ? 'selected' : '' }}
                         >
                             {{$categoria->nombre}}
                         </option>
@@ -63,7 +64,7 @@
                         id="preparacion" 
                         type="hidden" 
                         name="preparacion" 
-                        value="{{ old('preparacion') }}"
+                        value="{{ old('preparacion') ? old('preparacion') : $receta->preparacion }}"
                     />
                     <trix-editor 
                         input="preparacion" class="form-control @error('preparacion') is-invalid @enderror">
@@ -82,7 +83,7 @@
                         id="ingredientes" 
                         type="hidden" 
                         name="ingredientes" 
-                        value="{{ old('ingredientes') }}"
+                        value="{{ old('ingredientes') ? old('ingredientes') : $receta->ingredientes }}"
                     />
                     <trix-editor 
                         input="ingredientes" 
@@ -102,6 +103,12 @@
                         name="imagen"
                         id="imagen"
                     >
+
+                    <div class="mt-2">
+                        <p>Imagen Actual</p>
+                        <img src="/storage/{{ $receta->imagen }}" alt="Imagen receta" width="400px">
+                    </div>
+
                     @error('imagen')
                         <span class="invalid-feedback d-block" role="alert">
                             <strong>{{$message}}</strong>
@@ -110,7 +117,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Agregar Receta">
+                    <input type="submit" class="btn btn-primary" value="Editar Receta">
                 </div>
             </form>
         </div>

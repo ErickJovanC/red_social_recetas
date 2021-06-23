@@ -25,7 +25,9 @@ Route::post("/recetas", [RecetaController::class, "store"])->name('recetas.store
 
 // Vista para la receta individual
 Route::get("/recetas/{receta}", [RecetaController::class, "show"])->name('recetas.show');
-// {receta} es el modelo
+// Route::get('/recetas/{receta}/edit', 'RecetaController@edit')->name('recetas.edit');
+Route::get('/recetas/{receta}/edit', [RecetaController::class, 'edit'])->name('recetas.edit');
+Route::put('/recetas/{receta}', [RecetaController::class, 'update'])->name('recetas.update');
 
 Auth::routes();
 
