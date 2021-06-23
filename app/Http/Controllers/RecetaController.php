@@ -13,11 +13,11 @@ class RecetaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'show']);
     }
-    
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -72,7 +72,7 @@ class RecetaController extends Controller
         // Redimencionado de la imagen con Intervention/image
         $img = Image::make( public_path("storage/{$rutaImagen}"))-> fit(1000, 550);
         $img->save();
-        // Este cambio lo hace con la imagen en el propio servidor
+        // Este cambio lo hace con la imagen en el propio servidor, redimencionara y cortara de ser necesario.
 
         // Almacenar en la BD (Sin modelo)
         // DB::table('recetas')->insert([

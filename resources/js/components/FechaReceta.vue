@@ -1,6 +1,6 @@
 <template>
-    <span v-text="formaterFecha"></span> 
-    <!-- Esto se verá en la vista, v-text llama la función formaterarFecha -->
+    <span v-text="formatearFecha"></span> 
+    <!-- Esto se verá en la vista, v-text llama la función formatearFecha -->
 </template>
 
 <script>
@@ -12,7 +12,7 @@
         },
 
         computed: {
-            formaterFecha() {
+            formatearFecha() {
                 // Se cambia el formato de la fecha con moment y es devuelto el resultado
                 return moment(this.fecha).locale('es').format('DD [de] MMMM [del] YYYY')
             }

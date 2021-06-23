@@ -24,6 +24,7 @@
                 @endphp
 
                 <fecha-receta fecha="{{ $fecha }}"></fecha-receta>
+                {{-- <fecha-receta fecha="{{ $receta->created_at }}"></fecha-receta> --}}
             </p>
 
 
