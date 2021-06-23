@@ -28,6 +28,7 @@ Route::get("/recetas/{receta}", [RecetaController::class, "show"])->name('receta
 // Route::get('/recetas/{receta}/edit', 'RecetaController@edit')->name('recetas.edit');
 Route::get('/recetas/{receta}/edit', [RecetaController::class, 'edit'])->name('recetas.edit');
 Route::put('/recetas/{receta}', [RecetaController::class, 'update'])->name('recetas.update');
+Route::delete('/recetas/{receta}', [RecetaController::class, 'destroy'])->name('recetas.destroy');
 
 Auth::routes();
 
